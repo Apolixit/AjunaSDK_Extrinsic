@@ -1,12 +1,11 @@
 ﻿using Ajuna.NetApi;
+using Ajuna.NetApi.Model.Extrinsics;
 using Ajuna.NetApi.Model.Types;
 using AjunaExample.NetApiExt.Generated;
 using Schnorrkel.Keys;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using ChargeTransactionPayment = Ajuna.NetApi.Model.Extrinsics.ChargeTransactionPayment;
+using ChargeAssetTxPayment = Ajuna.NetApi.Model.Extrinsics.ChargeAssetTxPayment;
 
 namespace ExtrinsicsExample
 {
@@ -28,7 +27,10 @@ namespace ExtrinsicsExample
 
         public static async Task Main(string[] args)
         {
-            var client = new SubstrateClientExt(new Uri(NodeUrl));
+            var chargeType = ChargeTransactionPayment.Default(); // same as new ChargeTransactionPayment(0);
+            //var chargeType = ChargeAssetTxPayment.Default(); // same as new ChargeAssetTxPayment(0,0);
+
+            var client = new SubstrateClientExt(new Uri(NodeUrl), chargeType);
 
             Console.WriteLine($"Client Connection Status: {GetClientConnectionStatus(client)}");
 
@@ -44,7 +46,7 @@ namespace ExtrinsicsExample
             numberValue.Create(100000);
 
             var storeSomethingMethod = AjunaExample.NetApiExt.Generated.Storage.TemplateModuleCalls.DoSomething(numberValue);
-            await client.Author.SubmitExtrinsicAsync(storeSomethingMethod, Alice, new Ajuna.NetApi.Model.Extrinsics.ChargeAssetTxPayment(0, 0), 128, CancellationToken.None);
+            await client.Author.SubmitExtrinsicAsync(storeSomethingMethod, Alice, chargeType, 128, CancellationToken.None);
 
 
             Console.ReadLine();
