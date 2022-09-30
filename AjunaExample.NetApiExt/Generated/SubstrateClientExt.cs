@@ -7,6 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Ajuna.NetApi.Model.Extrinsics;
 using Ajuna.NetApi.Model.Meta;
 using Ajuna.NetApi.Model.Types.Base;
 using AjunaExample.NetApiExt.Generated.Storage;
@@ -70,8 +71,8 @@ namespace AjunaExample.NetApiExt.Generated
         /// </summary>
         public TemplateModuleStorage TemplateModuleStorage;
         
-        public SubstrateClientExt(System.Uri uri) : 
-                base(uri)
+        public SubstrateClientExt(System.Uri uri, ChargeType chargeType) : 
+                base(uri, chargeType)
         {
             StorageKeyDict = new System.Collections.Generic.Dictionary<System.Tuple<string, string>, System.Tuple<Ajuna.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>>();
             this.SystemStorage = new SystemStorage(this);
